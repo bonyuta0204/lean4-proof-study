@@ -35,16 +35,19 @@ theorem swap_and (P Q : Prop) : P ∧ Q → Q ∧ P := by
 theorem swap_or (P Q : Prop) : P ∨ Q → Q ∨ P := by
   intro h
   cases h with
-  | inl hP => sorry
-  | inr hQ => sorry
+  | inl hP =>
+    sorry
+  | inr hQ =>
+    sorry
 
+-- 2C・2D は追加問題。解きたい問題を囲む /- と -/ を外す。
 /-
-2C・2D は追加問題。解くときは、このブロックの開始・終了記号を外す。
-
 -- 2C. 2Aで作った定理を両方向に使う。
 theorem and_iff_swap (P Q : Prop) : (P ∧ Q) ↔ (Q ∧ P) := by
   sorry
+-/
 
+/-
 -- 2D. h.2 の型を見て、何を渡せば False が得られるか考える。
 theorem and_not_impossible (P : Prop) : ¬ (P ∧ ¬ P) := by
   sorry
