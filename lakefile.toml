@@ -1,0 +1,6 @@
+name = "lean4-proof-study"
+version = "0.1.0"
+defaultTargets = ["ProofStudy"]
+
+[[lean_lib]]
+name = "ProofStudy"
