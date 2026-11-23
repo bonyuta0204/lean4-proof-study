@@ -2,7 +2,24 @@
 
 プログラミングの経験と高校数学を出発点に、Leanを初めて触るところから始めます。ゴールは、**短い日本語の命題をLeanに書き、自分で証明して、各行が何をしているか説明できること**です。
 
-0から順に手を動かすと、初回は合計2時間ほどです。時間が短ければ1節ずつ進められます。「詰まったら」と「外部教材」は、必要になったところから引いてください。
+最初に15分ほど基礎を読み、そのあとVS Codeで手を動かします。演習は0から順に進めると合計2時間ほどです。時間が短ければ1節ずつ進められます。
+
+## 最初に命題とゴールの読み方を学ぶ（15分）
+
+園田翔さんの『数学系エンドユーザーのためのLean入門』を、次の順に読みます。ここまではブラウザだけで進められます。
+
+1. **命題と証明を読み分ける（5分）**。`P : Prop` は「`P` は命題」、`hP : P` は「`hP` は `P` の証明」です。`example` の行では、括弧の外にある最後の `:` の右側が、証明したい命題です。 [Leanの命題の読み方](https://shosonoda.github.io/lean-math-note/basic/chapter01/02/)
+2. **ゴールがどう変わるかを見る（10分）**。ページの冒頭から `exact` の例まで読みます。`by` の後に並ぶ証明の指示をタクティクと呼びます。Infoviewでは `⊢` の上に使える仮定が並び、`⊢` の後ろにいま示す命題が出ます。 [by と tactic モードの基本](https://shosonoda.github.io/lean-math-note/basic/chapter03/02/)
+
+「`P` ならば `Q`」の証明は、`P` の証明を受け取って `Q` の証明を返す関数です。たとえば「`P` ならば `P`」は、受け取った証明をそのまま返します。
+
+```lean
+theorem first_proof (P : Prop) : P → P := by
+  intro hP
+  exact hP
+```
+
+`intro hP` で入力を受け取ると、仮定に `hP : P` が加わり、残るゴールは `⊢ P` です。`exact hP` でその証明を渡します。関数として直接書くと `fun hP => hP` です。この2行が何をしているか言葉にできたら、教材を開いて確かめます。 [関数・含意・全称命題](https://shosonoda.github.io/lean-math-note/basic/chapter03/05/)
 
 ## 教材を開く
 
@@ -18,17 +35,9 @@ lake build
 
 ターミナルで確認するなら、編集したファイルを保存してから、リポジトリのルートで `lake env lean HandsOn/Practice.lean` を実行します。未着手の練習は `sorry` の警告として残ります。
 
-## 0. 最初の2行でInfoviewの読み方を覚える（10分）
+## 0. 読んだ証明をInfoviewで確かめる（10分）
 
-ハンズオンの `first_proof` を開くと、次の証明が入っています。
-
-```lean
-theorem first_proof (P : Prop) : P → P := by
-  intro hP
-  exact hP
-```
-
-これは「任意の命題 `P` について、`P` が成り立つなら `P` が成り立つ」という定理です。`P : Prop` は「`P` は命題」、`hP : P` は「`hP` は `P` の証明」と読みます。`:= by` の後ろに、証明を組み立てる指示を書きます。`intro` や `exact` のような指示を**タクティク**と呼びます。
+ハンズオンで、先ほど読んだ `first_proof` を開きます。
 
 1. `by` の直後から2行を順にたどり、右側の **Lean Infoview** を見ます。閉じていれば `⌘⇧P` から `Lean 4: InfoView: Toggle InfoView` を実行します。
 2. `intro hP` の後に、仮定欄へ `hP : P` が加わり、ゴールが `⊢ P` になることを確かめます。`⊢` の後ろが、いま示す命題です。
@@ -131,6 +140,6 @@ lake env lean -DwarningAsError=true StartHere.lean
 - **等式と存在の証明をもう一問解く**。The Mechanics of Proof の例1.2.2と2.5.5が、この教材の続きに向いています。付属の演習は教科書のリポジトリにあります。 [教科書の演習](https://github.com/hrmacbeth/math2001)・[§1.2 等式](https://hrmacbeth.github.io/math2001/01_Proofs_by_Calculation.html#proving-equalities-in-lean)・[§2.5 存在](https://hrmacbeth.github.io/math2001/02_Proofs_with_Structure.html#existence-proofs)・[§3.1 偶奇](https://hrmacbeth.github.io/math2001/03_Parity_and_Divisibility.html#definitions-parity)
 - **Leanが何を証明として扱うか確かめる**。`P : Prop` と `h : P` の関係は『Theorem Proving in Lean 4』の3章、ゴールとタクティクの関係は5章で説明されています。 [3章「命題と証明」](https://aconite-ac.github.io/theorem_proving_in_lean4_ja/propositions_and_proofs.html)・[5章「タクティク」](https://aconite-ac.github.io/theorem_proving_in_lean4_ja/tactics.html)
 
-外部教材のコードは、LeanのバージョンやMathlibなどのライブラリに依存することがあります。まずこのリポジトリの演習を進め、外部教材を動かすときは、教材側のセットアップ手順に従ってください。
+外部教材のコードは、LeanのバージョンやMathlibなどのライブラリに依存することがあります。コードを実行するときは、各教材のセットアップ手順を確認してください。
 
 **用語の早見**　命題は証明の対象になる主張。仮定は、その場で使える値や証明。ゴールは、いま示す命題。タクティクは、証明を組み立てる指示。証人は、存在を示す具体的な値。
